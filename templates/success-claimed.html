@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reunited! - Helping Hands</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #fafafa 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 30px;
+            padding: 50px 40px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(46, 125, 50, 0.2);
+            border: 2px solid rgba(46, 125, 50, 0.15);
+        }
+        .emoji {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: celebrate 0.8s ease infinite;
+        }
+        @keyframes celebrate {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        h1 {
+            color: #2e7d32;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+        p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 25px 0;
+            border: 2px solid #c8e6c9;
+        }
+        .highlight p {
+            margin: 0;
+            color: #2e7d32;
+            font-weight: 700;
+        }
+        .celebration {
+            background: linear-gradient(135deg, #fff8e1, #fff9c4);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 25px 0;
+            border: 2px solid #fff59d;
+        }
+        .celebration p {
+            margin: 0;
+            color: #f57f17;
+            font-weight: 700;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.5);
+        }
+        .btn-outline {
+            background: white;
+            color: #4CAF50;
+            border: 2px solid #c8e6c9;
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            border-color: #66BB6A;
+            background: #f1f8e9;
+        }
+        .footer {
+            margin-top: 30px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .footer span { color: #4CAF50; }
+        .balloons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .balloons span {
+            position: absolute;
+            font-size: 2.5rem;
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="balloons" id="balloons"></div>
+    
+    <div class="card">
+        <div class="emoji">🎉</div>
+        <h1>Reunited!</h1>
+        <p>What a wonderful moment! Something lost has been found, and someone's day has been made. This is what community is all about!</p>
+        
+        <div class="highlight">
+            <p>💚 Thank you for helping make this happen!</p>
+        </div>
+        
+        <div class="celebration">
+            <p>🌟 Together, we built something that brings people joy!</p>
+        </div>
+        
+        <p>Every item returned is a small victory — and you're part of the reason it happened.</p>
+        
+        <div>
+            <a href="/search" class="btn">🔍 Back to Search</a>
+            <a href="/" class="btn btn-outline">📝 Report Found Item</a>
+        </div>
+        
+        <div class="footer">
+            Made with <span>♥</span> by the <span>Helping Hands</span> Community
+        </div>
+    </div>
+
+    <script>
+        // Create balloon effect
+        const balloons = document.getElementById('balloons');
+        const balloonEmojis = ['🎈', '🎉', '🎊', '✨', '💚'];
+        for (let i = 0; i < 12; i++) {
+            const span = document.createElement('span');
+            span.textContent = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+            span.style.left = Math.random() * 100 + '%';
+            span.style.top = Math.random() * 100 + '%';
+            span.style.animationDelay = Math.random() * 2 + 's';
+            balloons.appendChild(span);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You! - Helping Hands</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #f8f4ff 0%, #f0f0f5 50%, #fafafa 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 30px;
+            padding: 50px 40px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.2);
+            border: 2px solid rgba(124, 58, 237, 0.1);
+        }
+        .emoji {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        h1 {
+            color: #7c3aed;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+        p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #f8f4ff, #f3f0f7);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 25px 0;
+            border: 2px solid #e8e0f0;
+        }
+        .highlight p {
+            margin: 0;
+            color: #7c3aed;
+            font-weight: 700;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #7c3aed, #9f5ccc);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.45);
+        }
+        .btn-outline {
+            background: white;
+            color: #7c3aed;
+            border: 2px solid #e8e0f0;
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            border-color: #9f5ccc;
+            background: #f8f4ff;
+        }
+        .footer {
+            margin-top: 30px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .footer span { color: #9f5ccc; }
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .confetti span {
+            position: absolute;
+            font-size: 2rem;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="confetti" id="confetti"></div>
+    
+    <div class="card">
+        <div class="emoji">🤝</div>
+        <h1>Thank You!</h1>
+        <p>Your kindness just made someone's day a little better. A stranger's lost item might be exactly what someone else has been searching for!</p>
+        
+        <div class="highlight">
+            <p>💜 You're making our community stronger!</p>
+        </div>
+        
+        <p>When the owner finds their item, they'll know someone like you cared enough to help.</p>
+        
+        <div>
+            <a href="/" class="btn">📝 Report Another</a>
+            <a href="/search" class="btn btn-outline">🔍 Search Items</a>
+        </div>
+        
+        <div class="footer">
+            Made with <span>♥</span> by the <span>Helping Hands</span> Community
+        </div>
+    </div>
+
+    <script>
+        // Create confetti effect
+        const emojis = ['✨', '💜', '🌟', '💫', '🎉'];
+        const confetti = document.getElementById('confetti');
+        for (let i = 0; i < 20; i++) {
+            const span = document.createElement('span');
+            span.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            span.style.left = Math.random() * 100 + '%';
+            span.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            span.style.animationDelay = Math.random() * 2 + 's';
+            confetti.appendChild(span);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - Helping Hands</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #f8f4ff 0%, #f0f0f5 50%, #fafafa 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .hero {
+            background: linear-gradient(135deg, #7c3aed 0%, #9f5ccc 50%, #b185cc 100%);
+            padding: 60px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: shimmer 15s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 { color: white; font-size: 2.8rem; font-weight: 800; margin-bottom: 10px; text-shadow: 0 2px 20px rgba(0,0,0,0.2); }
+        .hero p { color: rgba(255,255,255,0.9); font-size: 1.2rem; font-weight: 600; }
+        .hero-icon { font-size: 4rem; margin-bottom: 15px; }
+        .nav-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-bar a {
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-bar a.nav-secondary { background: #f3f0f7; color: #7c3aed; }
+        .nav-bar a.nav-secondary:hover { background: #e8e0f0; transform: translateY(-2px); }
+        .nav-bar a.nav-primary { background: linear-gradient(135deg, #7c3aed, #9f5ccc); color: white; box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4); }
+        .nav-bar a.nav-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5); }
+        .container { max-width: 900px; margin: 30px auto 40px; padding: 0 20px; position: relative; z-index: 10; }
+        .search-card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.12);
+            border: 1px solid rgba(124, 58, 237, 0.08);
+            margin-bottom: 30px;
+        }
+        .search-filters {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        @media (max-width: 600px) {
+            .search-filters { grid-template-columns: 1fr; }
+        }
+        input[type="text"], input[type="date"], select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e8e0f0;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-family: 'Nunito', sans-serif;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #9f5ccc;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(159, 92, 204, 0.15);
+        }
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239f5ccc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 18px;
+            padding-right: 45px;
+        }
+        .type-filter {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .type-filter button {
+            flex: 1;
+            padding: 14px;
+            border: 2px solid #e8e0f0;
+            border-radius: 14px;
+            background: #fafafa;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #888;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .type-filter button:hover { border-color: #9f5ccc; color: #7c3aed; }
+        .type-filter button.active {
+            background: linear-gradient(135deg, #7c3aed, #9f5ccc);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+        .btn-search {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #7c3aed, #9f5ccc);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Nunito', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+        .btn-search:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+        .item-list { display: grid; gap: 20px; }
+        .item-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 6px 25px rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.06);
+            display: flex;
+            gap: 25px;
+            transition: all 0.3s ease;
+        }
+        .item-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(124, 58, 237, 0.15);
+        }
+        .item-photo {
+            width: 160px;
+            height: 160px;
+            border-radius: 16px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #f3f0f7, #e8e0f0);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        .item-content { flex: 1; }
+        .item-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+        .badge {
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .badge-found { background: #e8f5e9; color: #2e7d32; }
+        .badge-lost { background: #fff3e0; color: #e65100; }
+        .badge-claimed { background: #ffebee; color: #c62828; }
+        .badge-category { background: linear-gradient(135deg, #7c3aed, #9f5ccc); color: white; }
+        .item-card h3 { color: #333; font-size: 1.15rem; margin-bottom: 8px; font-weight: 800; }
+        .item-card p { color: #666; margin: 6px 0; font-size: 0.95rem; }
+        .pickup-box {
+            background: linear-gradient(135deg, #f8f4ff, #f3f0f7);
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-top: 12px;
+            color: #7c3aed;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pickup-box.claimed { background: #ffebee; color: #c62828; }
+        .item-actions { margin-top: 15px; }
+        .btn-claim {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            font-family: 'Nunito', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+        .btn-claim:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(76, 175, 80, 0.4);
+        }
+        .no-results {
+            text-align: center;
+            padding: 60px 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 6px 25px rgba(124, 58, 237, 0.1);
+        }
+        .no-results-icon { font-size: 4rem; margin-bottom: 15px; }
+        .no-results h3 { color: #7c3aed; margin-bottom: 8px; font-weight: 800; }
+        .no-results p { color: #888; }
+        .footer { text-align: center; padding: 30px; color: #aaa; font-size: 0.85rem; }
+        .footer span { color: #9f5ccc; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            .hero { padding: 40px 15px 60px; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .hero-icon { font-size: 3rem; }
+
+            .nav-bar {
+                flex-wrap: wrap;
+                gap: 8px;
+                padding: 12px 15px;
+            }
+            .nav-bar a {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+                flex: 1 1 auto;
+                min-width: calc(50% - 8px);
+                justify-content: center;
+            }
+
+            .container {
+                margin: 20px auto 30px;
+                padding: 0 15px;
+            }
+
+            .search-card {
+                padding: 20px 15px;
+            }
+
+            .search-filters {
+                grid-template-columns: 1fr;
+            }
+
+            .type-filter {
+                flex-direction: column;
+            }
+            .type-filter button {
+                width: 100%;
+            }
+
+            .item-card {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .item-photo {
+                width: 100%;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-icon">🔍</div>
+            <h1>Search Items</h1>
+            <p>Find what's lost, reunite what's found</p>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <a href="/" class="nav-secondary">✨ Report Found</a>
+        <a href="/report-lost" class="nav-secondary">💔 Report Lost</a>
+        <a href="/search" class="nav-primary">🔍 Search</a>
+        <a href="/archives" class="nav-secondary">🤝 Archives</a>
+    </nav>
+
+    <div class="container">
+        <div class="search-card">
+            <form class="search-filters" method="GET" action="/search">
+                <input type="text" name="q" placeholder="🔍 Search by location, name..." value="{{ query }}">
+                <select name="category">
+                    <option value="">📁 All Categories</option>
+                    <option value="electronics" {% if category == 'electronics' %}selected{% endif %}>📱 Electronics</option>
+                    <option value="clothing" {% if category == 'clothing' %}selected{% endif %}>👕 Clothing</option>
+                    <option value="keys" {% if category == 'keys' %}selected{% endif %}>🔑 Keys</option>
+                    <option value="wallet" {% if category == 'wallet' %}selected{% endif %}>👛 Wallet / Bag</option>
+                    <option value="jewelry" {% if category == 'jewelry' %}selected{% endif %}>💍 Jewelry</option>
+                    <option value="other" {% if category == 'other' %}selected{% endif %}>📦 Other</option>
+                </select>
+                <input type="date" name="dateFrom" placeholder="From date" value="{{ date_from }}">
+                <input type="date" name="dateTo" placeholder="To date" value="{{ date_to }}">
+                <input type="hidden" name="type" value="{{ item_type }}" id="typeFilter">
+                <div class="type-filter">
+                    <button type="button" onclick="setType('')" class="{% if not item_type %}active{% endif %}">✨ All</button>
+                    <button type="button" onclick="setType('found')" class="{% if item_type == 'found' %}active{% endif %}">📝 Found</button>
+                    <button type="button" onclick="setType('lost')" class="{% if item_type == 'lost' %}active{% endif %}">🔎 Lost</button>
+                </div>
+                <button type="submit" class="btn-search">🔍 Search</button>
+            </form>
+        </div>
+
+        <div class="item-list">
+            {% if items %}
+                {% for item in items %}
+                <div class="item-card">
+                    {% if item.photo %}
+                        <img src="/uploads/{{ item.photo }}" class="item-photo" alt="Item photo">
+                    {% else %}
+                        <div class="item-photo">📷</div>
+                    {% endif %}
+                    <div class="item-content">
+                        <div class="item-badges">
+                            <span class="badge badge-{{ item.type }}">
+                                {% if item.type == 'found' %}📝 Found{% else %}🔎 Lost{% endif %}
+                            </span>
+                            <span class="badge badge-category">{{ item.category }}</span>
+                            {% if item.status == 'claimed' %}
+                                <span class="badge badge-claimed">✓ Claimed</span>
+                            {% endif %}
+                        </div>
+                        <h3>{{ item.category|title }} — {{ item.type == 'found' and 'Found' or 'Lost' }}</h3>
+                        <p>📅 <strong>Date:</strong> {{ item.foundDate }}</p>
+                        <div class="pickup-box
+                            {% if item.status == 'claimed' %}claimed{% endif %}">
+                            {% if item.status == 'claimed' %}✓{% else %}📍{% endif %}
+                            <strong>{{ item.type == 'found' and 'Pickup' or 'Preferred' }} at:</strong>
+                            {% if item.pickupLocation == 'front_desk' %}🏢 Front Desk Lost & Found ({{ item.location }})
+                            {% elif item.pickupLocation == 'last_seen' %}📍 {{ item.location }}
+                            {% elif item.pickupLocation == 'anywhere' %}🗺️ Flexible - Will Coordinate
+                            {% elif item.pickupLocation == 'location_found' %}📍 {{ item.location }}
+                            {% else %}{{ item.pickupLocation }}{% endif %}
+                        </div>
+                        <p style="margin-top: 12px;">📞 <strong>Contact:</strong> {{ item.contact }} ({{ item.finderName }})</p>
+                        {% if item.status != 'claimed' %}
+                        <div class="item-actions">
+                            <button class="btn-claim" onclick="markClaimed({{ item.id }})">
+                                ✓ Mark as {{ item.type == 'found' and 'Claimed' or 'Found' }}
+                            </button>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-results">
+                    <div class="no-results-icon">🔍</div>
+                    <h3>No items found</h3>
+                    <p>Try adjusting your search or browse all items</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <footer class="footer">
+        Made with <span>♥</span> by the <span>Helping Hands</span> Community
+    </footer>
+
+    <script>
+        function setType(type) {
+            document.getElementById('typeFilter').value = type;
+            document.querySelector('.search-filters').submit();
+        }
+        
+        function markClaimed(id) {
+            if (confirm('Mark this item as claimed/reunited?')) {
+                window.location.href = '/mark-claimed/' + id;
+            }
+        }
+    </script>
+</body>
+</html>

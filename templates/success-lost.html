@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We've Got You - Helping Hands</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #f8f4ff 0%, #f0f0f5 50%, #fafafa 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 30px;
+            padding: 50px 40px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.2);
+            border: 2px solid rgba(124, 58, 237, 0.1);
+        }
+        .emoji {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: pulse 2s ease infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        h1 {
+            color: #7c3aed;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+        p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #fff8e1, #fff3e0);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 25px 0;
+            border: 2px solid #ffe0b2;
+        }
+        .highlight p {
+            margin: 0;
+            color: #e65100;
+            font-weight: 700;
+        }
+        .hope {
+            background: linear-gradient(135deg, #f8f4ff, #f3f0f7);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 25px 0;
+            border: 2px solid #e8e0f0;
+        }
+        .hope p {
+            margin: 0;
+            color: #7c3aed;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #7c3aed, #9f5ccc);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.45);
+        }
+        .btn-outline {
+            background: white;
+            color: #7c3aed;
+            border: 2px solid #e8e0f0;
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            border-color: #9f5ccc;
+            background: #f8f4ff;
+        }
+        .footer {
+            margin-top: 30px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .footer span { color: #9f5ccc; }
+        .sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .sparkles span {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <div class="sparkles" id="sparkles"></div>
+    
+    <div class="card">
+        <div class="emoji">🔍</div>
+        <h1>We've Got Your Report!</h1>
+        <p>Don't worry — you're not alone in this. Our community is watching, and someone might just find your missing item!</p>
+        
+        <div class="highlight">
+            <p>🤞 Keep your chin up! Things have a way of turning up.</p>
+        </div>
+        
+        <div class="hope">
+            <p>✨ Stay positive — good news might come when you least expect it!</p>
+        </div>
+        
+        <p>Keep an eye on the search page, and we'll never give up on helping you find what you've lost.</p>
+        
+        <div>
+            <a href="/search" class="btn">🔍 Search Items</a>
+            <a href="/report-lost" class="btn btn-outline">🔎 Report Another</a>
+        </div>
+        
+        <div class="footer">
+            Made with <span>♥</span> by the <span>Helping Hands</span> Community
+        </div>
+    </div>
+
+    <script>
+        // Create sparkle effect
+        const sparklesEl = document.getElementById('sparkles');
+        const sparkleEmojis = ['✨', '💫', '⭐', '🌟'];
+        for (let i = 0; i < 15; i++) {
+            const span = document.createElement('span');
+            span.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+            span.style.left = Math.random() * 100 + '%';
+            span.style.top = Math.random() * 100 + '%';
+            span.style.animationDelay = Math.random() * 2 + 's';
+            sparklesEl.appendChild(span);
+        }
+    </script>
+</body>
+</html>
